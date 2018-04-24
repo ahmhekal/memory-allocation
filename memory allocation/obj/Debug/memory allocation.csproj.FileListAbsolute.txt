@@ -1,0 +1,9 @@
+c:\users\omar\documents\visual studio 2012\Projects\memory allocation\memory allocation\bin\Debug\memory allocation.exe.config
+c:\users\omar\documents\visual studio 2012\Projects\memory allocation\memory allocation\obj\Debug\memory allocation.csprojResolveAssemblyReference.cache
+c:\users\omar\documents\visual studio 2012\Projects\memory allocation\memory allocation\obj\Debug\memory_allocation.Form1.resources
+c:\users\omar\documents\visual studio 2012\Projects\memory allocation\memory allocation\obj\Debug\memory_allocation.Properties.Resources.resources
+c:\users\omar\documents\visual studio 2012\Projects\memory allocation\memory allocation\obj\Debug\memory allocation.csproj.GenerateResource.Cache
+c:\users\omar\documents\visual studio 2012\Projects\memory allocation\memory allocation\bin\Debug\memory allocation.exe
+c:\users\omar\documents\visual studio 2012\Projects\memory allocation\memory allocation\bin\Debug\memory allocation.pdb
+c:\users\omar\documents\visual studio 2012\Projects\memory allocation\memory allocation\obj\Debug\memory allocation.exe
+c:\users\omar\documents\visual studio 2012\Projects\memory allocation\memory allocation\obj\Debug\memory allocation.pdb
