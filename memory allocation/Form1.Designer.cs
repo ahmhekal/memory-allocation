@@ -43,6 +43,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.deallocate = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.memorysize = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.datagridview1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -58,25 +60,25 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(30, 47);
+            this.label1.Location = new System.Drawing.Point(40, 49);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 13);
+            this.label1.Size = new System.Drawing.Size(85, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Number of holes";
             // 
             // datagridview1
             // 
             this.datagridview1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.datagridview1.Location = new System.Drawing.Point(12, 80);
+            this.datagridview1.Location = new System.Drawing.Point(199, 101);
             this.datagridview1.Name = "datagridview1";
-            this.datagridview1.Size = new System.Drawing.Size(427, 254);
+            this.datagridview1.Size = new System.Drawing.Size(344, 254);
             this.datagridview1.TabIndex = 2;
             this.datagridview1.Visible = false;
             this.datagridview1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagridview1_CellContentClick);
             // 
             // submit
             // 
-            this.submit.Location = new System.Drawing.Point(172, 340);
+            this.submit.Location = new System.Drawing.Point(311, 406);
             this.submit.Name = "submit";
             this.submit.Size = new System.Drawing.Size(75, 23);
             this.submit.TabIndex = 3;
@@ -95,11 +97,11 @@
             // 
             // submit2
             // 
-            this.submit2.Location = new System.Drawing.Point(329, 90);
+            this.submit2.Location = new System.Drawing.Point(452, 49);
             this.submit2.Name = "submit2";
-            this.submit2.Size = new System.Drawing.Size(75, 23);
+            this.submit2.Size = new System.Drawing.Size(91, 32);
             this.submit2.TabIndex = 6;
-            this.submit2.Text = "submit";
+            this.submit2.Text = "Draw Memory!";
             this.submit2.UseVisualStyleBackColor = true;
             this.submit2.Visible = false;
             this.submit2.Click += new System.EventHandler(this.submit2_Click);
@@ -110,7 +112,7 @@
             this.comboBox1.Items.AddRange(new object[] {
             "First fit",
             "Best fit"});
-            this.comboBox1.Location = new System.Drawing.Point(342, 43);
+            this.comboBox1.Location = new System.Drawing.Point(489, 193);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(97, 21);
             this.comboBox1.TabIndex = 7;
@@ -120,7 +122,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(256, 47);
+            this.label2.Location = new System.Drawing.Point(394, 201);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(80, 13);
             this.label2.TabIndex = 8;
@@ -131,7 +133,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(272, 122);
+            this.label3.Location = new System.Drawing.Point(394, 171);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 13);
             this.label3.TabIndex = 9;
@@ -140,7 +142,7 @@
             // 
             // process_size
             // 
-            this.process_size.Location = new System.Drawing.Point(339, 119);
+            this.process_size.Location = new System.Drawing.Point(489, 164);
             this.process_size.Name = "process_size";
             this.process_size.Size = new System.Drawing.Size(100, 20);
             this.process_size.TabIndex = 10;
@@ -148,7 +150,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(316, 155);
+            this.button1.Location = new System.Drawing.Point(452, 231);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 11;
@@ -159,9 +161,9 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(55, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(70, 21);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(211, 366);
+            this.pictureBox1.Size = new System.Drawing.Size(218, 430);
             this.pictureBox1.TabIndex = 12;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;
@@ -169,24 +171,24 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(272, 204);
+            this.label4.Location = new System.Drawing.Point(418, 319);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(140, 13);
+            this.label4.Size = new System.Drawing.Size(142, 13);
             this.label4.TabIndex = 13;
             this.label4.Text = "deallocate process number :";
             this.label4.Visible = false;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(322, 231);
+            this.textBox1.Location = new System.Drawing.Point(469, 335);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(82, 20);
+            this.textBox1.Size = new System.Drawing.Size(34, 20);
             this.textBox1.TabIndex = 14;
             this.textBox1.Visible = false;
             // 
             // deallocate
             // 
-            this.deallocate.Location = new System.Drawing.Point(329, 257);
+            this.deallocate.Location = new System.Drawing.Point(452, 361);
             this.deallocate.Name = "deallocate";
             this.deallocate.Size = new System.Drawing.Size(75, 23);
             this.deallocate.TabIndex = 15;
@@ -195,11 +197,29 @@
             this.deallocate.Visible = false;
             this.deallocate.Click += new System.EventHandler(this.deallocate_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(256, 46);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(67, 13);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Memory Size";
+            // 
+            // memorysize
+            // 
+            this.memorysize.Location = new System.Drawing.Point(340, 39);
+            this.memorysize.Name = "memorysize";
+            this.memorysize.Size = new System.Drawing.Size(71, 20);
+            this.memorysize.TabIndex = 17;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(452, 390);
+            this.ClientSize = new System.Drawing.Size(721, 477);
+            this.Controls.Add(this.memorysize);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.deallocate);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label4);
@@ -216,7 +236,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numh);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Memory Allocation";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint_1);
             ((System.ComponentModel.ISupportInitialize)(this.datagridview1)).EndInit();
@@ -243,6 +263,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button deallocate;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox memorysize;
     }
 }
 

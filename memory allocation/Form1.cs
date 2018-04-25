@@ -54,14 +54,15 @@ namespace memory_allocation
         private void submit_Click(object sender, EventArgs e)
         {
 
-            label2.Visible = true;
-            comboBox1.Visible = true;
+          
             label1.Text = "Number of Processes";
             numh.Visible = false;
             datagridview1.Visible = false;
             nump.Visible = true;
             submit.Visible = false;
             submit2.Visible = true;
+            label5.Visible = false;
+            memorysize.Visible = false;
 
             for (int i = 0; i < num_holes; i++)
             {
@@ -92,12 +93,11 @@ namespace memory_allocation
 
         private void submit2_Click(object sender, EventArgs e)
         {
-            if (comboBox1.Text == "First fit")
+
                 Sortedholes = holes.OrderBy(o => o.address).ToList();
-            else if (comboBox1.Text == "Best fit")
-            {
-                Sortedholes = holes.OrderBy(o => o.size).ToList();
-            }
+    
+            label2.Visible = true;
+            comboBox1.Visible = true;
             label4.Visible = true;
             textBox1.Visible = true;
             deallocate.Visible = true;
@@ -109,25 +109,24 @@ namespace memory_allocation
             Graphics g;
             g = Graphics.FromImage(image);
             //SolidBrush sbgreen = new SolidBrush(Color.Green);
-            int height = Sortedholes[Sortedholes.Count() - 1].address + Sortedholes[Sortedholes.Count() - 1].size;
-            float factor = (float)347 / height;
+            //int height = Sortedholes[Sortedholes.Count() - 1].address + Sortedholes[Sortedholes.Count() - 1].size;
+            int height = Int32.Parse(memorysize.Text);
+            float factor = (float)430 / height;
             //MessageBox.Show(height.ToString());
             g.FillRectangle(Brushes.Black, 0, 0, 100,height*factor+20);
-            g.DrawString("Memory", font, Brushes.White, new PointF(30, 160));
+            //g.DrawString("Memory", font, Brushes.White, new PointF(30, 160));
 
             for (int i = 0; i < Sortedholes.Count(); i++)
             {
                 g.FillRectangle(Brushes.White, 0, (Sortedholes[i].address)*factor, 100, Sortedholes[i].size * factor);
             }
             pictureBox1.Image = image;
-            label2.Visible = false;
-            comboBox1.Visible = false;
-            nump.Visible = false;
             submit2.Visible = false;
             label1.Visible = false;
             label3.Visible = true;
             process_size.Visible = true;
             button1.Visible = true;
+            nump.Visible = false;
 
         }
 
@@ -147,6 +146,13 @@ namespace memory_allocation
         int count = 0;
         private void button1_Click(object sender, EventArgs e)
         {
+            if (comboBox1.Text == "First fit")
+                Sortedholes = holes.OrderBy(o => o.address).ToList();
+            else if (comboBox1.Text == "Best fit")
+            {
+                Sortedholes = holes.OrderBy(o => o.size).ToList();
+            }
+         
 
             count++;
                 process tempprocess = new process();
@@ -187,10 +193,10 @@ namespace memory_allocation
                 Bitmap image = new Bitmap(pictureBox1.ClientSize.Width, pictureBox1.ClientSize.Height);
                 Graphics g;
                 g = Graphics.FromImage(image);
-                int height = Sortedholes[Sortedholes.Count() - 1].address + Sortedholes[Sortedholes.Count() - 1].size;
-                float factor =(float) 347 / height;
+                int height = Int32.Parse(memorysize.Text);
+                float factor =(float) 430 / height;
                 //MessageBox.Show(Sortedholes[0].size.ToString());
-                g.FillRectangle(Brushes.Black, 0, 0, 100, 347+20);
+                g.FillRectangle(Brushes.Black, 0, 0, 100, 430);
                 //g.DrawString("MEMORY", font, Brushes.White, new PointF(30, 160));
                 for (int i = 0; i < Sortedholes.Count(); i++)
                 {
@@ -273,10 +279,10 @@ namespace memory_allocation
             Bitmap image = new Bitmap(pictureBox1.ClientSize.Width, pictureBox1.ClientSize.Height);
             Graphics g;
             g = Graphics.FromImage(image);
-            int height = Sortedholes[Sortedholes.Count() - 1].address + Sortedholes[Sortedholes.Count() - 1].size;
-            float factor = (float)347 / height;
+            int height = Int32.Parse(memorysize.Text);
+            float factor = (float)430 / height;
             //MessageBox.Show(Sortedholes[0].size.ToString());
-            g.FillRectangle(Brushes.Black, 0, 0, 100, 347 + 20);
+            g.FillRectangle(Brushes.Black, 0, 0, 100, 430);
             //g.DrawString("MEMORY", font, Brushes.White, new PointF(30, 160));
             for (int i = 0; i < Sortedholes.Count(); i++)
             {
