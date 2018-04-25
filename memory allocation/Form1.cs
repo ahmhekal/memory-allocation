@@ -76,6 +76,7 @@ namespace memory_allocation
                 holes.Add(temphole);                
             }
            Sortedholes = holes.OrderBy(o => o.address).ToList();
+           //MessageBox.Show(Sortedholes[0].size.ToString());
 
         }
         
@@ -149,13 +150,13 @@ namespace memory_allocation
                 {
                     if (Sortedholes[j].size >= tempprocess.size)
                     {
-                        Sortedholes[j].size -= tempprocess.size;
+                       // Sortedholes[j].size -= tempprocess.size;
                         allocated = 1;
                         break;
 
                     }
                 }
-                MessageBox.Show(allocated.ToString());
+                //MessageBox.Show(allocated.ToString());
 
                 FontFamily ff = new FontFamily("Arial");
                 System.Drawing.Font font = new System.Drawing.Font(ff, 10);
@@ -164,12 +165,14 @@ namespace memory_allocation
                 Graphics g;
                 g = Graphics.FromImage(image);
                 int height = Sortedholes[num_holes - 1].address + Sortedholes[num_holes - 1].size;
-                float factor =(float) 34 / height;
+                float factor =(float) 347 / height;
+                //MessageBox.Show(Sortedholes[0].size.ToString());
+
                 if (allocated == 1)
                 {
-                    g.FillRectangle(Brushes.Black, 0, 0, 100, 347);
+                    g.FillRectangle(Brushes.Black, 0, 0, 100,347);
+                    g.DrawString("HOLE", font, Brushes.White, new PointF(30, 160));
                     g.FillRectangle(Brushes.Green, 0, Sortedholes[j].address*factor , 100, tempprocess.size*factor);
-                    g.DrawString("P1", font, Brushes.White, new PointF(30, 160));
                     pictureBox1.Image = image;
                 }
 
