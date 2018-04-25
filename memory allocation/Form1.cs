@@ -89,16 +89,20 @@ namespace memory_allocation
 
         private void submit2_Click(object sender, EventArgs e)
         {
-           
+            pictureBox1.Visible = true;
             FontFamily ff = new FontFamily("Arial");
             System.Drawing.Font font = new System.Drawing.Font(ff, 10);
             System.Drawing.Font bigfont = new System.Drawing.Font(ff, 12);
+            Bitmap image = new Bitmap(pictureBox1.ClientSize.Width, pictureBox1.ClientSize.Height);
             Graphics g;
-            g = this.CreateGraphics();
-            SolidBrush sbgreen = new SolidBrush(Color.Green);
+            g = Graphics.FromImage(image);
+            //SolidBrush sbgreen = new SolidBrush(Color.Green);
             int height = Sortedholes[num_holes - 1].address + Sortedholes[num_holes - 1].size;
-            MessageBox.Show(height.ToString());
-            g.FillRectangle(sbgreen, 80, 150, 100,300);
+            //MessageBox.Show(height.ToString());
+            g.FillRectangle(Brushes.Black, 0, 0, 100,347);
+            g.DrawString("HOLE", font, Brushes.White, new PointF(30, 160));
+
+            pictureBox1.Image = image;
             label2.Visible = false;
             comboBox1.Visible = false;
             nump.Visible = false;
@@ -136,33 +140,44 @@ namespace memory_allocation
             
             /*************************************/
 
-           /* if (comboBox1.Text == "First fit")
+            if (comboBox1.Text == "First fit")
             {
                 int allocated = 0;
                 List<hole> Sortedholes = holes.OrderBy(o => o.address).ToList();
-                for (int i = 0; i < num_processes; i++)
+                int j;
+                for (j = 0; j < num_holes; j++)
                 {
-                    allocated = 0;
-                    for (int j = 0; j < num_holes; j++)
+                    if (Sortedholes[j].size >= tempprocess.size)
                     {
-                        if (Sortedholes[j].size >= processes[i].size)
-                        {
-                            Sortedholes[j].size -= processes[i].size;
-                            allocated = 1;
-                            break;
+                        Sortedholes[j].size -= tempprocess.size;
+                        allocated = 1;
+                        break;
 
-                        }
-                        MessageBox.Show(allocated.ToString());
                     }
-
-
-
-
-
-
                 }
+                MessageBox.Show(allocated.ToString());
+
+                FontFamily ff = new FontFamily("Arial");
+                System.Drawing.Font font = new System.Drawing.Font(ff, 10);
+                System.Drawing.Font bigfont = new System.Drawing.Font(ff, 12);
+                Bitmap image = new Bitmap(pictureBox1.ClientSize.Width, pictureBox1.ClientSize.Height);
+                Graphics g;
+                g = Graphics.FromImage(image);
+                int height = Sortedholes[num_holes - 1].address + Sortedholes[num_holes - 1].size;
+                float factor =(float) 34 / height;
+                if (allocated == 1)
+                {
+                    g.FillRectangle(Brushes.Black, 0, 0, 100, 347);
+                    g.FillRectangle(Brushes.Green, 0, Sortedholes[j].address*factor , 100, tempprocess.size*factor);
+                    g.DrawString("P1", font, Brushes.White, new PointF(30, 160));
+                    pictureBox1.Image = image;
+                }
+
+                
+
+
             }
-            */
+            
         }
 
         private void Form1_Paint_1(object sender, PaintEventArgs e)
