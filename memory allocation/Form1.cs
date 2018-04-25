@@ -19,7 +19,9 @@ namespace memory_allocation
         int num_holes, num_processes;
         List<hole> holes = new List<hole>();
         List<process> processes = new List<process>();
+        List<process> allocated_processes = new List<process>();
         List<hole> Sortedholes;
+        List<hole>  sizesortedholes;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -75,8 +77,8 @@ namespace memory_allocation
                 
                 holes.Add(temphole);                
             }
-           Sortedholes = holes.OrderBy(o => o.address).ToList();
            //MessageBox.Show(Sortedholes[0].size.ToString());
+
 
         }
         
@@ -90,6 +92,15 @@ namespace memory_allocation
 
         private void submit2_Click(object sender, EventArgs e)
         {
+            if (comboBox1.Text == "First fit")
+                Sortedholes = holes.OrderBy(o => o.address).ToList();
+            else if (comboBox1.Text == "Best fit")
+            {
+                Sortedholes = holes.OrderBy(o => o.size).ToList();
+            }
+            label4.Visible = true;
+            textBox1.Visible = true;
+            deallocate.Visible = true;
             pictureBox1.Visible = true;
             FontFamily ff = new FontFamily("Arial");
             System.Drawing.Font font = new System.Drawing.Font(ff, 10);
@@ -98,11 +109,16 @@ namespace memory_allocation
             Graphics g;
             g = Graphics.FromImage(image);
             //SolidBrush sbgreen = new SolidBrush(Color.Green);
-            int height = Sortedholes[num_holes - 1].address + Sortedholes[num_holes - 1].size;
+            int height = Sortedholes[Sortedholes.Count() - 1].address + Sortedholes[Sortedholes.Count() - 1].size;
+            float factor = (float)347 / height;
             //MessageBox.Show(height.ToString());
-            g.FillRectangle(Brushes.Black, 0, 0, 100,347);
-            g.DrawString("HOLE", font, Brushes.White, new PointF(30, 160));
+            g.FillRectangle(Brushes.Black, 0, 0, 100,height*factor+20);
+            g.DrawString("Memory", font, Brushes.White, new PointF(30, 160));
 
+            for (int i = 0; i < Sortedholes.Count(); i++)
+            {
+                g.FillRectangle(Brushes.White, 0, (Sortedholes[i].address)*factor, 100, Sortedholes[i].size * factor);
+            }
             pictureBox1.Image = image;
             label2.Visible = false;
             comboBox1.Visible = false;
@@ -126,37 +142,44 @@ namespace memory_allocation
 
         }
 
-       
 
+
+        int count = 0;
         private void button1_Click(object sender, EventArgs e)
         {
-           
+
+            count++;
                 process tempprocess = new process();
 
 
                 tempprocess.size = Int32.Parse(process_size.Text);
-
+                tempprocess.name = count;
                 processes.Add(tempprocess);
-
+                
             
             /*************************************/
 
-            if (comboBox1.Text == "First fit")
-            {
+          
+            
+              
                 int allocated = 0;
-                List<hole> Sortedholes = holes.OrderBy(o => o.address).ToList();
-                int j;
-                for (j = 0; j < num_holes; j++)
+
+                
+               
+            int j;
+                for (j = 0; j < Sortedholes.Count(); j++)
                 {
                     if (Sortedholes[j].size >= tempprocess.size)
                     {
-                       // Sortedholes[j].size -= tempprocess.size;
+                       // 
                         allocated = 1;
+                        tempprocess.start_adress = Sortedholes[j].address;
+                        allocated_processes.Add(tempprocess);
                         break;
 
                     }
                 }
-                //MessageBox.Show(allocated.ToString());
+                //MessageBox.Show(allocated.ToString(;
 
                 FontFamily ff = new FontFamily("Arial");
                 System.Drawing.Font font = new System.Drawing.Font(ff, 10);
@@ -164,28 +187,117 @@ namespace memory_allocation
                 Bitmap image = new Bitmap(pictureBox1.ClientSize.Width, pictureBox1.ClientSize.Height);
                 Graphics g;
                 g = Graphics.FromImage(image);
-                int height = Sortedholes[num_holes - 1].address + Sortedholes[num_holes - 1].size;
+                int height = Sortedholes[Sortedholes.Count() - 1].address + Sortedholes[Sortedholes.Count() - 1].size;
                 float factor =(float) 347 / height;
                 //MessageBox.Show(Sortedholes[0].size.ToString());
+                g.FillRectangle(Brushes.Black, 0, 0, 100, 347+20);
+                //g.DrawString("MEMORY", font, Brushes.White, new PointF(30, 160));
+                for (int i = 0; i < Sortedholes.Count(); i++)
+                {
+                    g.FillRectangle(Brushes.White, 0, (Sortedholes[i].address) * factor, 100, Sortedholes[i].size * factor);
+                }
+                int color = 0;
+                for (int i = 0; i < allocated_processes.Count(); i++)
+                {
+                    if(color%3==0)
+                         g.FillRectangle(Brushes.GreenYellow, 0, allocated_processes[i].start_adress * factor, 100, allocated_processes[i].size * factor);
+                    else if(color%3==1)
+                        g.FillRectangle(Brushes.Pink, 0, allocated_processes[i].start_adress * factor, 100, allocated_processes[i].size * factor);
 
+                    else
+                        g.FillRectangle(Brushes.Purple, 0, allocated_processes[i].start_adress * factor, 100, allocated_processes[i].size * factor);
+
+                    g.DrawString("p"+allocated_processes[i].name.ToString(), font, Brushes.Black, new PointF(101, allocated_processes[i].start_adress*factor));
+                    color++;
+
+                }
                 if (allocated == 1)
                 {
-                    g.FillRectangle(Brushes.Black, 0, 0, 100,347);
-                    g.DrawString("HOLE", font, Brushes.White, new PointF(30, 160));
-                    g.FillRectangle(Brushes.Green, 0, Sortedholes[j].address*factor , 100, tempprocess.size*factor);
+
+                    g.FillRectangle(Brushes.Green, 0, Sortedholes[j].address * factor, 100, tempprocess.size * factor);
                     pictureBox1.Image = image;
+                    Sortedholes[j].size -= tempprocess.size;
+                    Sortedholes[j].address += tempprocess.size;
+                    g.DrawString("p"+tempprocess.name.ToString(), font, Brushes.Black, new PointF(101, tempprocess.start_adress * factor));
+
+                }
+                else
+                {
+                    MessageBox.Show("Sorry, Allocation Failed. No Enough Memory");
                 }
 
                 
 
 
-            }
+            
             
         }
 
         private void Form1_Paint_1(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void datagridview1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void deallocate_Click(object sender, EventArgs e)
+        {
+            int index=Int32.Parse(textBox1.Text);
+            hole temphole=new hole();
+
+            for (int i = 0; i < allocated_processes.Count(); i++)
+            {
+                if (allocated_processes[i].name == index)
+                {
+                    index = i;
+                    break;
+                }
+            }
+                temphole.size = allocated_processes[index].size;
+            temphole.address=allocated_processes[index].start_adress;
+            holes.Add(temphole);
+            allocated_processes.RemoveAt(index);
+
+            if (comboBox1.Text == "First fit")
+                Sortedholes = holes.OrderBy(o => o.address).ToList();
+            else if (comboBox1.Text == "Best fit")
+                Sortedholes = holes.OrderBy(o => o.size).ToList();
+
+
+            FontFamily ff = new FontFamily("Arial");
+            System.Drawing.Font font = new System.Drawing.Font(ff, 10);
+            System.Drawing.Font bigfont = new System.Drawing.Font(ff, 12);
+            Bitmap image = new Bitmap(pictureBox1.ClientSize.Width, pictureBox1.ClientSize.Height);
+            Graphics g;
+            g = Graphics.FromImage(image);
+            int height = Sortedholes[Sortedholes.Count() - 1].address + Sortedholes[Sortedholes.Count() - 1].size;
+            float factor = (float)347 / height;
+            //MessageBox.Show(Sortedholes[0].size.ToString());
+            g.FillRectangle(Brushes.Black, 0, 0, 100, 347 + 20);
+            //g.DrawString("MEMORY", font, Brushes.White, new PointF(30, 160));
+            for (int i = 0; i < Sortedholes.Count(); i++)
+            {
+                g.FillRectangle(Brushes.White, 0, (Sortedholes[i].address) * factor, 100, Sortedholes[i].size * factor);
+            }
+            int color = 0;
+            for (int i = 0; i < allocated_processes.Count(); i++)
+            {
+                if (color % 3 == 0)
+                    g.FillRectangle(Brushes.GreenYellow, 0, allocated_processes[i].start_adress * factor, 100, allocated_processes[i].size * factor);
+                else if (color % 3 == 1)
+                    g.FillRectangle(Brushes.Pink, 0, allocated_processes[i].start_adress * factor, 100, allocated_processes[i].size * factor);
+
+                else
+                    g.FillRectangle(Brushes.Purple, 0, allocated_processes[i].start_adress * factor, 100, allocated_processes[i].size * factor);
+
+                g.DrawString("p" + allocated_processes[i].name.ToString(), font, Brushes.Black, new PointF(101, allocated_processes[i].start_adress * factor));
+                color++;
+
+            }
+            pictureBox1.Image = image;
         }
 
         

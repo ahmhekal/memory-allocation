@@ -13,5 +13,17 @@ namespace memory_allocation
             get;
             set;
         }
+
+        public int start_adress
+        {
+            get;
+            set;
+        }
+
+        public int name
+        {
+            get;
+            set;
+        }
     }
 }
