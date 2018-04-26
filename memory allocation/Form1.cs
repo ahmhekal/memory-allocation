@@ -35,8 +35,11 @@ namespace memory_allocation
             datagridview1.DataSource = null;
             datagridview1.Columns.Clear();  //Just make sure things are blank.
             datagridview1.Columns.Add("Column1", "Hole number");
+            datagridview1.Columns["Column1"].ReadOnly = true;
+
             datagridview1.Columns.Add("Column2", "Hole Size");
             datagridview1.Columns.Add("Column3", "Hole starting address");
+
             int n;
             bool isNumeric = int.TryParse(numh.Text, out n);
             if (isNumeric)
@@ -63,22 +66,54 @@ namespace memory_allocation
 
         private void submit2_Click(object sender, EventArgs e)
         {
-            label7.Visible = true;
-            label8.Visible = true;
-            label9.Visible = true;
-            label10.Visible=true;
+            int n;
+            bool isNumeric = int.TryParse(numh.Text, out n);
+            bool isNumeric2 = int.TryParse(memorysize.Text, out n);
+            if ( (!isNumeric) || (! isNumeric2) )
+            {
+                MessageBox.Show("You have to enter valid number of holes and memory size");
+                return;
+            }
+            int numhh= Int32.Parse(numh.Text);
+            int memory_sizee= Int32.Parse(memorysize.Text);
+            if (numhh <= 0 || memory_sizee <= 0)
+            {
+                MessageBox.Show("You have to enter a valid positive number of holes and memory size");
+                return;
+            }
+           
              holes.Clear();
             
             for (int i = 0; i < num_holes; i++)
             {
+                if ((datagridview1.Rows[i].Cells[1].Value==null) || (datagridview1.Rows[i].Cells[2].Value==null))
+                {
+                    MessageBox.Show("You have to enter a valid address and size of holes");
+                    return;
+                }
+                bool isNumeric3 = int.TryParse(datagridview1.Rows[i].Cells[1].Value.ToString(), out n);
+                bool isNumeric4 = int.TryParse(datagridview1.Rows[i].Cells[2].Value.ToString(), out n);
+                if ((!isNumeric3) || (!isNumeric4))
+                {
+                    MessageBox.Show("You have to enter a valid address and size of holes");
+                    return;
+                }
                 int tempsize = Int32.Parse(datagridview1.Rows[i].Cells[1].Value.ToString());
                 int tempaddress = Int32.Parse(datagridview1.Rows[i].Cells[2].Value.ToString());
-                hole temphole = new hole();
-                temphole.size = tempsize;
-                temphole.address = tempaddress;
-                holes.Add(temphole);
+                if (tempsize > 0 && tempaddress >= 0)
+                {
+                    hole temphole = new hole();
+                    temphole.size = tempsize;
+                    temphole.address = tempaddress;
+                    holes.Add(temphole);
+                }
+                else
+                {
+                    MessageBox.Show("You have to enter a valid address and size of holes");
+                    return;
+                }
             }
-            //MessageBox.Show(Sortedholes[0].size.ToString());
+          
 
                 Sortedholes = holes.OrderBy(o => o.address).ToList();
             /////////////---------Removing overlap ---------/////////////
@@ -136,18 +171,25 @@ namespace memory_allocation
                 MessageBox.Show("Memory size isn't enough for all holes !");
             else
             {
-                
+                label7.Visible = true;
+                label8.Visible = true;
+                label9.Visible = true;
+                label10.Visible = true;
+
                 float factor = (float)430 / height;
                 //MessageBox.Show(height.ToString());
                 Bitmap image = new Bitmap(pictureBox1.ClientSize.Width, pictureBox1.ClientSize.Height);
                 Graphics g;
                 g = Graphics.FromImage(image);
                 g.FillRectangle(Brushes.Black, 0,10, 100, height * factor);
-                //g.DrawString("Memory", font, Brushes.White, new PointF(30, 160));
-
+                FontFamily ff = new FontFamily("Arial");
+                System.Drawing.Font font = new System.Drawing.Font(ff, 10);
                 for (int i = 0; i < Sortedholes.Count(); i++)
                 {
                     g.FillRectangle(Brushes.White, 0, (Sortedholes[i].address) * factor + 10, 100, Sortedholes[i].size * factor);
+                    g.DrawString(Sortedholes[i].address.ToString(), font, Brushes.Black, new PointF(101, Sortedholes[i].address * factor + 2));
+                    g.DrawString((Sortedholes[i].address + Sortedholes[i].size).ToString(), font, Brushes.Black, new PointF(101, (Sortedholes[i].address + Sortedholes[i].size) * factor + 2));
+                   
                 }
                 label1.Visible = false;
                 numh.Visible = false;
@@ -161,8 +203,7 @@ namespace memory_allocation
                 textBox1.Visible = true;
                 deallocate.Visible = true;
                 pictureBox1.Visible = true;
-                FontFamily ff = new FontFamily("Arial");
-                System.Drawing.Font font = new System.Drawing.Font(ff, 10);
+       
              
                 pictureBox1.Image = image;
                 submit2.Visible = false;
@@ -190,6 +231,21 @@ namespace memory_allocation
         int count = 0;
         private void button1_Click(object sender, EventArgs e)
         {
+            int n;
+            bool isNumeric = int.TryParse(process_size.Text, out n);
+            if ((!isNumeric))
+            {
+                MessageBox.Show("You have to enter valid process size to allocate");
+                return;
+            }
+            int processsize = Int32.Parse(process_size.Text);
+            if (processsize <= 0)
+            {
+                MessageBox.Show("You have to enter valid positive process size to allocate");
+                return;
+            }
+
+
             if (comboBox1.Text == "First fit")
                 Sortedholes = holes.OrderBy(o => o.address).ToList();
             else if (comboBox1.Text == "Best fit")
@@ -245,6 +301,8 @@ namespace memory_allocation
                 for (int i = 0; i < Sortedholes.Count(); i++)
                 {
                     g.FillRectangle(Brushes.White, 0, (Sortedholes[i].address) * factor + 10, 100, Sortedholes[i].size * factor);
+                    g.DrawString(Sortedholes[i].address.ToString(), font, Brushes.Black, new PointF(101, Sortedholes[i].address * factor + 2));
+                    g.DrawString((Sortedholes[i].address + Sortedholes[i].size).ToString(), font, Brushes.Black, new PointF(101, (Sortedholes[i].address + Sortedholes[i].size) * factor + 2));
                 }
                 int color = 0;
                 for (int i = 0; i < allocated_processes.Count(); i++)
@@ -262,8 +320,8 @@ namespace memory_allocation
 
                     else
                         g.FillRectangle(Brushes.Violet, 0, allocated_processes[i].start_adress * factor + 10, 100, allocated_processes[i].size * factor);
-
-                    g.DrawString("p"+allocated_processes[i].name.ToString(), font, Brushes.Black, new PointF(40, allocated_processes[i].start_adress*factor+20));
+                    double y = (allocated_processes[i].start_adress + 0.5 * allocated_processes[i].size) * factor;
+                    g.DrawString("p"+allocated_processes[i].name.ToString(), font, Brushes.Black, new PointF(40,(float) y));
                     g.DrawString(allocated_processes[i].start_adress.ToString(), font, Brushes.Black, new PointF(101, allocated_processes[i].start_adress * factor + 2));
                     g.DrawString((allocated_processes[i].start_adress + allocated_processes[i].size).ToString(), font, Brushes.Black, new PointF(101, (allocated_processes[i].start_adress + allocated_processes[i].size) * factor + 2));
                    
@@ -291,7 +349,9 @@ namespace memory_allocation
                     pictureBox1.Image = image;
                     Sortedholes[j].size -= tempprocess.size;
                     Sortedholes[j].address += tempprocess.size;
-                    g.DrawString("p"+tempprocess.name.ToString(), font, Brushes.Black, new PointF(40, tempprocess.start_adress * factor+20));
+
+                    double y = (tempprocess.start_adress + 0.5 * tempprocess.size) * factor;
+                    g.DrawString("p" + tempprocess.name.ToString(), font, Brushes.Black, new PointF(40, (float)y));
                     g.DrawString(tempprocess.start_adress.ToString(), font, Brushes.Black, new PointF(101, tempprocess.start_adress * factor + 2));
                     g.DrawString((tempprocess.start_adress+tempprocess.size).ToString(), font, Brushes.Black, new PointF(101, (tempprocess.start_adress+tempprocess.size) * factor + 2));
 
@@ -339,6 +399,21 @@ namespace memory_allocation
 
         private void deallocate_Click(object sender, EventArgs e)
         {
+            int n;
+            bool isNumeric = int.TryParse(textBox1.Text, out n);
+            if ((!isNumeric))
+            {
+                MessageBox.Show("You have to enter valid process name to allocate");
+                return;
+            }
+            int processsize = Int32.Parse(textBox1.Text);
+            if (processsize <= 0)
+            {
+                MessageBox.Show("You have to enter valid process name to allocate");
+                return;
+            }
+
+            
             int index=Int32.Parse(textBox1.Text);
             hole temphole=new hole();
             bool found_allocated = false; //check if process which we want to deallocat is already allocated
@@ -362,43 +437,49 @@ namespace memory_allocation
 
                 temphole.size = allocated_processes[index].size;
                 temphole.address = allocated_processes[index].start_adress;
-                int found = 0;
-                int k;
-                for (k = 0; k < holes.Count(); k++)
+                int found1 = 0;
+                int found2 = 0;
+                int k1, k2;
+                for (k1 = 0; k1 < holes.Count(); k1++)
                 {
-                    if ((holes[k].address + holes[k].size) == allocated_processes[index].start_adress)
+                    if ((holes[k1].address + holes[k1].size) == allocated_processes[index].start_adress)
                     {
-                        found++;
+                        found1++;
                         break;
                     }
                 }
-                if (found != 0)
+
+                for (k2 = 0; k2 < holes.Count(); k2++)
                 {
-                    temphole.size = allocated_processes[index].size + holes[k].size;
-                    temphole.address = holes[k].address;
-                    holes.RemoveAt(k);
-                }
-                found = 0;
-                for (k = 0; k < holes.Count(); k++)
-                {
-                    if ((holes[k].address) == allocated_processes[index].start_adress + allocated_processes[index].size)
+                    if ((holes[k2].address) == allocated_processes[index].start_adress + allocated_processes[index].size)
                     {
-                        found++;
+                        found2++;
                         break;
                     }
                 }
-                if (found != 0)
+                if (found1 != 0 && found2 != 0)
                 {
-                    temphole.size = allocated_processes[index].size + holes[k].size;
+                    temphole.size = holes[k1].size + allocated_processes[index].size + holes[k2].size;
+                    temphole.address = holes[k1].address;
+                    holes[k2].size = 0;
+                    holes.RemoveAt(k1);
+
+                }
+                else if (found1 != 0)
+                {
+                    temphole.size = allocated_processes[index].size + holes[k1].size;
+                    temphole.address = holes[k1].address;
+                    holes.RemoveAt(k1);
+                }
+                else if (found2 != 0)
+                {
+                    temphole.size = allocated_processes[index].size + holes[k2].size;
                     temphole.address = allocated_processes[index].start_adress;
-                    holes.RemoveAt(k);
+                    holes.RemoveAt(k2);
                 }
 
                 holes.Add(temphole);
                 allocated_processes.RemoveAt(index);
-
-
-
 
                 if (comboBox1.Text == "First fit")
                     Sortedholes = holes.OrderBy(o => o.address).ToList();
@@ -465,6 +546,8 @@ namespace memory_allocation
                 for (int i = 0; i < Sortedholes.Count(); i++)
                 {
                     g.FillRectangle(Brushes.White, 0, (Sortedholes[i].address) * factor + 10, 100, Sortedholes[i].size * factor);
+                    g.DrawString(Sortedholes[i].address.ToString(), font, Brushes.Black, new PointF(101, Sortedholes[i].address * factor + 2));
+                    g.DrawString((Sortedholes[i].address + Sortedholes[i].size).ToString(), font, Brushes.Black, new PointF(101, (Sortedholes[i].address + Sortedholes[i].size) * factor + 2));
                 }
                 int color = 0;
                 for (int i = 0; i < allocated_processes.Count(); i++)
@@ -483,7 +566,8 @@ namespace memory_allocation
                     else
                         g.FillRectangle(Brushes.Violet, 0, allocated_processes[i].start_adress * factor + 10, 100, allocated_processes[i].size * factor);
 
-                    g.DrawString("p" + allocated_processes[i].name.ToString(), font, Brushes.Black, new PointF(40, allocated_processes[i].start_adress * factor+20));
+                    double y = (allocated_processes[i].start_adress + 0.5 * allocated_processes[i].size) * factor ;
+                    g.DrawString("p" + allocated_processes[i].name.ToString(), font, Brushes.Black, new PointF(40, (float)y));
                     g.DrawString(allocated_processes[i].start_adress.ToString(), font, Brushes.Black, new PointF(101, allocated_processes[i].start_adress * factor + 2));
                     g.DrawString((allocated_processes[i].start_adress + allocated_processes[i].size).ToString(), font, Brushes.Black, new PointF(101, (allocated_processes[i].start_adress + allocated_processes[i].size) * factor + 2));
                     color++;
@@ -491,6 +575,11 @@ namespace memory_allocation
                 }
                 pictureBox1.Image = image;
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Close();
         }
 
 
