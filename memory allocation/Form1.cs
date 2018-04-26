@@ -21,6 +21,7 @@ namespace memory_allocation
         List<process> processes = new List<process>();
         List<process> allocated_processes = new List<process>();
         List<hole> Sortedholes;
+        List<process> waiting_list = new List<process>();
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -51,7 +52,7 @@ namespace memory_allocation
         }
         //not allowing overlap
         // more colors
-// if the user enters un-existed process to deallocate
+        // if the user enters un-existed process to deallocate
 
         private void nump_TextChanged(object sender, EventArgs e)
         {
@@ -89,8 +90,45 @@ namespace memory_allocation
                 }
             //////////////////////*-------------------------------////////
 
+            
+            
+
+            int done = 0;
+            int indx =0;
+            while (done==0)
+            {
+                done = 1;
+                for (int i = 0; i < Sortedholes.Count()-1; i++)
+                {
+                    
+                    if (Sortedholes[i].address + Sortedholes[i].size == Sortedholes[i + 1].address)
+                    {
+                        
+                        done = 0;
+                        int temp_size=Sortedholes[i].size+Sortedholes[i + 1].size;
+                        for (int k = 0; k < holes.Count(); k++)
+                        {
+                            if (holes[k].address == Sortedholes[i].address)
+                                holes[k].size = temp_size;
+
+                            if (holes[k].address == Sortedholes[i + 1].address)
+                                indx = k;
+
+                        }
+                        holes.RemoveAt(indx);
+                        Sortedholes = holes.OrderBy(o => o.address).ToList();
+                        break;
+                    }
+                }
+            
+            
+            }
+            
+            Sortedholes = holes.OrderBy(o => o.address).ToList();
+
             int holesheight = Sortedholes[Sortedholes.Count() - 1].address + Sortedholes[Sortedholes.Count() - 1].size;
             int height = Int32.Parse(memorysize.Text);
+
             if (holesheight > height)
                 MessageBox.Show("Memory size isn't enough for all holes !");
             else
@@ -260,6 +298,7 @@ namespace memory_allocation
                 else
                 {
                     MessageBox.Show("Sorry, Allocation Failed. No Enough Memory");
+                    waiting_list.Add(tempprocess);
                 }
 
                 
@@ -336,7 +375,53 @@ namespace memory_allocation
                 Sortedholes = holes.OrderBy(o => o.address).ToList();
             else if (comboBox1.Text == "Best fit")
                 Sortedholes = holes.OrderBy(o => o.size).ToList();
+            int done = 0;
+            while (done==0)
+            {
+                done = 1;
+                for (int i = 0; i < waiting_list.Count(); i++)
+                {
+                    for (int j = 0; j < Sortedholes.Count(); j++)
+                    {
+                        if (waiting_list[i].size <= Sortedholes[j].size)
+                        {
+                            waiting_list[i].start_adress = Sortedholes[j].address;
+                            Sortedholes[j].size -= waiting_list[i].size;
+                            Sortedholes[j].address += waiting_list[i].size;
+                            if (Sortedholes[j].size == 0)
+                            {
 
+                                for (int f = 0; f < holes.Count; f++)
+                                {
+                                    if (holes[f].address == Sortedholes[j].address)
+                                    {
+                                        holes.RemoveAt(f);
+                                        break;
+                                    }
+
+                                }
+                                Sortedholes.RemoveAt(j);
+                            }
+                            allocated_processes.Add(waiting_list[i]);
+                            waiting_list.RemoveAt(i);
+
+
+                            Sortedholes = holes.OrderBy(o => o.address).ToList();
+                           
+                            done = 0;
+                            break;
+                        }
+
+                    }
+                    if (done == 0)
+                        break;
+                }
+
+            }
+            if (comboBox1.Text == "First fit")
+                Sortedholes = holes.OrderBy(o => o.address).ToList();
+            else if (comboBox1.Text == "Best fit")
+                Sortedholes = holes.OrderBy(o => o.size).ToList();
 
             FontFamily ff = new FontFamily("Arial");
             System.Drawing.Font font = new System.Drawing.Font(ff, 10);

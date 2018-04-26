@@ -25,3 +25,12 @@ E:\courses\memory project\memory-allocation\memory allocation\obj\Debug\memory a
 E:\courses\memory project\memory-allocation\memory allocation\obj\Debug\memory_allocation.Form1.resources
 E:\courses\memory project\memory-allocation\memory allocation\obj\Debug\memory_allocation.Properties.Resources.resources
 E:\courses\memory project\memory-allocation\memory allocation\obj\Debug\memory allocation.csproj.GenerateResource.Cache
+E:\courses\mem project\memory-allocation\memory allocation\bin\Debug\memory allocation.exe.config
+E:\courses\mem project\memory-allocation\memory allocation\obj\Debug\memory allocation.exe
+E:\courses\mem project\memory-allocation\memory allocation\obj\Debug\memory allocation.pdb
+E:\courses\mem project\memory-allocation\memory allocation\bin\Debug\memory allocation.exe
+E:\courses\mem project\memory-allocation\memory allocation\bin\Debug\memory allocation.pdb
+E:\courses\mem project\memory-allocation\memory allocation\obj\Debug\memory allocation.csprojResolveAssemblyReference.cache
+E:\courses\mem project\memory-allocation\memory allocation\obj\Debug\memory_allocation.Form1.resources
+E:\courses\mem project\memory-allocation\memory allocation\obj\Debug\memory_allocation.Properties.Resources.resources
+E:\courses\mem project\memory-allocation\memory allocation\obj\Debug\memory allocation.csproj.GenerateResource.Cache
