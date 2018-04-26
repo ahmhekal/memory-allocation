@@ -31,8 +31,6 @@
             this.numh = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.datagridview1 = new System.Windows.Forms.DataGridView();
-            this.submit = new System.Windows.Forms.Button();
-            this.nump = new System.Windows.Forms.TextBox();
             this.submit2 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -51,18 +49,21 @@
             // 
             // numh
             // 
-            this.numh.Location = new System.Drawing.Point(140, 44);
+            this.numh.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numh.Location = new System.Drawing.Point(261, 54);
             this.numh.Name = "numh";
-            this.numh.Size = new System.Drawing.Size(71, 20);
+            this.numh.Size = new System.Drawing.Size(71, 30);
             this.numh.TabIndex = 0;
             this.numh.TextChanged += new System.EventHandler(this.numh_TextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(40, 49);
+            this.label1.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.LightSeaGreen;
+            this.label1.Location = new System.Drawing.Point(90, 57);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(85, 13);
+            this.label1.Size = new System.Drawing.Size(165, 27);
             this.label1.TabIndex = 1;
             this.label1.Text = "Number of holes";
             // 
@@ -76,34 +77,16 @@
             this.datagridview1.Visible = false;
             this.datagridview1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagridview1_CellContentClick);
             // 
-            // submit
-            // 
-            this.submit.Location = new System.Drawing.Point(311, 406);
-            this.submit.Name = "submit";
-            this.submit.Size = new System.Drawing.Size(75, 23);
-            this.submit.TabIndex = 3;
-            this.submit.Text = "Submit";
-            this.submit.UseVisualStyleBackColor = true;
-            this.submit.Click += new System.EventHandler(this.submit_Click);
-            // 
-            // nump
-            // 
-            this.nump.Location = new System.Drawing.Point(151, 44);
-            this.nump.Name = "nump";
-            this.nump.Size = new System.Drawing.Size(71, 20);
-            this.nump.TabIndex = 4;
-            this.nump.Visible = false;
-            this.nump.TextChanged += new System.EventHandler(this.nump_TextChanged);
-            // 
             // submit2
             // 
-            this.submit2.Location = new System.Drawing.Point(452, 49);
+            this.submit2.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.submit2.ForeColor = System.Drawing.Color.Black;
+            this.submit2.Location = new System.Drawing.Point(264, 372);
             this.submit2.Name = "submit2";
-            this.submit2.Size = new System.Drawing.Size(91, 32);
+            this.submit2.Size = new System.Drawing.Size(165, 56);
             this.submit2.TabIndex = 6;
             this.submit2.Text = "Draw Memory!";
             this.submit2.UseVisualStyleBackColor = true;
-            this.submit2.Visible = false;
             this.submit2.Click += new System.EventHandler(this.submit2_Click);
             // 
             // comboBox1
@@ -161,9 +144,9 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(70, 21);
+            this.pictureBox1.Location = new System.Drawing.Point(106, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(218, 430);
+            this.pictureBox1.Size = new System.Drawing.Size(219, 469);
             this.pictureBox1.TabIndex = 12;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;
@@ -200,41 +183,42 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(256, 46);
+            this.label5.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.LightSeaGreen;
+            this.label5.Location = new System.Drawing.Point(361, 55);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(67, 13);
+            this.label5.Size = new System.Drawing.Size(132, 27);
             this.label5.TabIndex = 16;
             this.label5.Text = "Memory Size";
             // 
             // memorysize
             // 
-            this.memorysize.Location = new System.Drawing.Point(340, 39);
+            this.memorysize.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.memorysize.Location = new System.Drawing.Point(499, 57);
             this.memorysize.Name = "memorysize";
-            this.memorysize.Size = new System.Drawing.Size(71, 20);
+            this.memorysize.Size = new System.Drawing.Size(71, 30);
             this.memorysize.TabIndex = 17;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(721, 477);
+            this.ClientSize = new System.Drawing.Size(709, 499);
             this.Controls.Add(this.memorysize);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.deallocate);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.process_size);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.submit2);
-            this.Controls.Add(this.nump);
-            this.Controls.Add(this.submit);
-            this.Controls.Add(this.datagridview1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numh);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.datagridview1);
             this.Name = "Form1";
             this.Text = "Memory Allocation";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -251,8 +235,6 @@
         private System.Windows.Forms.TextBox numh;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView datagridview1;
-        private System.Windows.Forms.Button submit;
-        private System.Windows.Forms.TextBox nump;
         private System.Windows.Forms.Button submit2;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label2;
