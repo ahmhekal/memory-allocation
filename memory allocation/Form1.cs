@@ -66,6 +66,7 @@ namespace memory_allocation
 
         private void submit2_Click(object sender, EventArgs e)
         {
+            button3.Visible = true;
             int n;
             bool isNumeric = int.TryParse(numh.Text, out n);
             bool isNumeric2 = int.TryParse(memorysize.Text, out n);
@@ -580,6 +581,38 @@ namespace memory_allocation
         private void button2_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            button3.Visible = false;
+            label2.Visible = false;
+            label3.Visible = false;
+            label4.Visible = false;
+            label7.Visible = false;
+            label8.Visible = false;
+            label9.Visible = false;
+            label10.Visible = false;
+            pictureBox1.Visible = false;
+            process_size.Visible = false;
+            textBox1.Visible = false;
+            comboBox1.Visible = false;
+            button1.Visible = false;
+            deallocate.Visible = false;
+
+            datagridview1.Visible = true;
+            numh.Visible = true;
+            memorysize.Visible = true;
+            label1.Visible = true;
+            label5.Visible = true;
+            submit2.Visible = true;
+
+
+            holes.Clear();
+            processes.Clear();
+            allocated_processes.Clear();
+            Sortedholes.Clear(); 
+            waiting_list.Clear();
         }
 
 
