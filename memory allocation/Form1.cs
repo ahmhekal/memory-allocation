@@ -16,12 +16,11 @@ namespace memory_allocation
         {
             InitializeComponent();
         }
-        int num_holes, num_processes;
+        int num_holes;
         List<hole> holes = new List<hole>();
         List<process> processes = new List<process>();
         List<process> allocated_processes = new List<process>();
         List<hole> Sortedholes;
-        List<hole>  sizesortedholes;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -149,9 +148,7 @@ namespace memory_allocation
             if (comboBox1.Text == "First fit")
                 Sortedholes = holes.OrderBy(o => o.address).ToList();
             else if (comboBox1.Text == "Best fit")
-            {
                 Sortedholes = holes.OrderBy(o => o.size).ToList();
-            }
          
 
             count++;
@@ -225,7 +222,24 @@ namespace memory_allocation
                     Sortedholes[j].size -= tempprocess.size;
                     Sortedholes[j].address += tempprocess.size;
                     g.DrawString("p"+tempprocess.name.ToString(), font, Brushes.Black, new PointF(101, tempprocess.start_adress * factor));
+                    if (Sortedholes[j].size == 0)
+                    {
+                        
+                        for (int k = 0; k < holes.Count; k++)
+                        {
+                            if (holes[k].address == Sortedholes[j].address)
+                            {
+                                holes.RemoveAt(k);
+                                break;
+                            }
 
+                        }
+                        Sortedholes.RemoveAt(j);
+                    }
+                        if (comboBox1.Text == "First fit")
+                            Sortedholes = holes.OrderBy(o => o.address).ToList();
+                        else if (comboBox1.Text == "Best fit")
+                            Sortedholes = holes.OrderBy(o => o.size).ToList();
                 }
                 else
                 {
@@ -262,10 +276,45 @@ namespace memory_allocation
                     break;
                 }
             }
-                temphole.size = allocated_processes[index].size;
+            temphole.size = allocated_processes[index].size;
             temphole.address=allocated_processes[index].start_adress;
+            int found=0;
+            int k ;
+            for(k=0;k<holes.Count();k++)
+            {
+                if ((holes[k].address + holes[k].size) == allocated_processes[index].start_adress)
+                {
+                    found++;
+                    break;
+                }
+            }
+            if (found!=0)
+            {
+                temphole.size = allocated_processes[index].size+holes[k].size;
+                temphole.address =holes[k].address;
+                holes.RemoveAt(k);
+            }
+            found = 0;
+            for (k = 0; k < holes.Count(); k++)
+            {
+                if ((holes[k].address) == allocated_processes[index].start_adress+allocated_processes[index].size)
+                {
+                    found++;
+                    break;
+                }
+            }
+            if (found != 0)
+            {
+                temphole.size = allocated_processes[index].size + holes[k].size;
+                temphole.address = allocated_processes[index].start_adress;
+                holes.RemoveAt(k);
+            }
+
             holes.Add(temphole);
             allocated_processes.RemoveAt(index);
+
+
+
 
             if (comboBox1.Text == "First fit")
                 Sortedholes = holes.OrderBy(o => o.address).ToList();
