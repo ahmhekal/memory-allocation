@@ -322,7 +322,7 @@ namespace memory_allocation
                     else
                         g.FillRectangle(Brushes.Violet, 0, allocated_processes[i].start_adress * factor + 10, 100, allocated_processes[i].size * factor);
                     double y = (allocated_processes[i].start_adress + 0.5 * allocated_processes[i].size) * factor;
-                    g.DrawString("p"+allocated_processes[i].name.ToString(), font, Brushes.Black, new PointF(40,(float) y));
+                    g.DrawString("p" + allocated_processes[i].name.ToString() + ", Size = " + allocated_processes[i].size.ToString(), font, Brushes.Black, new PointF(4, (float)y));
                     g.DrawString(allocated_processes[i].start_adress.ToString(), font, Brushes.Black, new PointF(101, allocated_processes[i].start_adress * factor + 2));
                     g.DrawString((allocated_processes[i].start_adress + allocated_processes[i].size).ToString(), font, Brushes.Black, new PointF(101, (allocated_processes[i].start_adress + allocated_processes[i].size) * factor + 2));
                    
@@ -352,7 +352,7 @@ namespace memory_allocation
                     Sortedholes[j].address += tempprocess.size;
 
                     double y = (tempprocess.start_adress + 0.5 * tempprocess.size) * factor;
-                    g.DrawString("p" + tempprocess.name.ToString(), font, Brushes.Black, new PointF(40, (float)y));
+                    g.DrawString("p" + tempprocess.name.ToString() + ", Size = " + tempprocess.size.ToString(), font, Brushes.Black, new PointF(4, (float)y));
                     g.DrawString(tempprocess.start_adress.ToString(), font, Brushes.Black, new PointF(101, tempprocess.start_adress * factor + 2));
                     g.DrawString((tempprocess.start_adress+tempprocess.size).ToString(), font, Brushes.Black, new PointF(101, (tempprocess.start_adress+tempprocess.size) * factor + 2));
 
@@ -568,7 +568,7 @@ namespace memory_allocation
                         g.FillRectangle(Brushes.Violet, 0, allocated_processes[i].start_adress * factor + 10, 100, allocated_processes[i].size * factor);
 
                     double y = (allocated_processes[i].start_adress + 0.5 * allocated_processes[i].size) * factor ;
-                    g.DrawString("p" + allocated_processes[i].name.ToString(), font, Brushes.Black, new PointF(40, (float)y));
+                    g.DrawString("p" + allocated_processes[i].name.ToString() +", Size = " + allocated_processes[i].size.ToString(), font, Brushes.Black, new PointF(4, (float)y));
                     g.DrawString(allocated_processes[i].start_adress.ToString(), font, Brushes.Black, new PointF(101, allocated_processes[i].start_adress * factor + 2));
                     g.DrawString((allocated_processes[i].start_adress + allocated_processes[i].size).ToString(), font, Brushes.Black, new PointF(101, (allocated_processes[i].start_adress + allocated_processes[i].size) * factor + 2));
                     color++;
